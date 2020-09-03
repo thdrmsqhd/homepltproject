@@ -1,7 +1,20 @@
 package com.spring.plt.manuFac.service;
 
+import java.util.List;
+
+import com.spring.plt.manuFac.vo.ManuFacVO;
+
 public interface ManuFacService {
 
-	void serchByLoc();
+
+	List<ManuFacVO> serchByManuType(String manuType);
+
+	List<ManuFacVO> serchByManuMinimumPrice(String price);
+
+	ManuFacVO viewManuFac(String id);
+
+	List<ManuFacVO> allManuFac();
+
+	List<ManuFacVO> serchByManuLoc(String loc);
 
 }
