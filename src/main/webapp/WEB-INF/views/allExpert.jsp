@@ -83,45 +83,34 @@
             <div class="categories">
               <!-- <h5>업종별 검색</h5> -->
               <select id="manuFacType" class="custom-select" style="width:75%">
-                <option value="box">업종</option>
-                <option value="도서/음반">도서/음반</option>
-                <option value="가전/디지털">가전/디지털</option>
-                <option value="홈인테리어">홈인테리어</option>
-                <option value="패션의류/잡화">패션의류/잡화</option>
-                <option value="기타">기타</option>
+                <option value="type">업종</option>
+                <option value="fire">fire</option>
+                <option value="wind">wind</option>
+                <option value="spark">spark</option>
+                <option value="parrot">Parrot</option>
               </select>
               <button id="serchByTypebtn" class="btn btn-primary">검색</button>
               <!-- id기준으로 자바스크립트에서 button선택 하여 onClick메서드 이용하여 ajax작동 -->
               <hr>
               <!-- <h5>지역별 검색</h5> -->
               <select id="manuFacLoc" class="custom-select" style="width:75%">
-                <option value="box">지역</option>
-                <option value="서울">서울</option>
-                <option value="부산">부산</option>
-                <option value="대구">대구</option>
-                <option value="인천">인천</option>
-                <option value="광주">광주</option>
-                <option value="경기도">경기도</option>
-                <option value="강원도">강원도</option>
-                <option value="경상북도">경상북도</option>
-                <option value="경상북도">경상남도</option>
-                <option value="전라북도">전라북도</option>
-                <option value="전라남도">전라남도</option>
-                <option value="충청북도">충청북도</option>
-                <option value="충청남도">충청남도</option>
-                <option value="세종">세종특별자치시</option>
+                <option value="">지역</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="hamster">Hamster</option>
+                <option value="parrot">Parrot</option>
               </select>
               <button id="serchByLocbtn" class="btn btn-primary">검색</button>
               <hr>
               <!-- <h5>최소 발주 금액</h5> -->
-			  <label for="최소발주금액">최소 발주 금액</label><br>
-			  <div style="width:80%">
-              <input type="range" id="manuFacPrice" class="form-control-range" id="formControlRange" min="100" max="1000" value="90" step="10">
-              <div class="changeRange" style ="width:80%; height:50px;">
-              	100만원
-              </div>
-              <button style="float:left" id="serchByPricebtn" class="btn btn-primary">검색</button>
-              </div>
+              <select id="manuFacPrice" class="custom-select" style="width:75%">
+                <option value="">최소 발주 금액</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="hamster">Hamster</option>
+                <option value="parrot">Parrot</option>
+              </select>
+              <button id="serchByPricebtn" class="btn btn-primary">검색</button>
             </div>
           </div>
         </div>
@@ -147,13 +136,7 @@
         var serchArray = document.querySelectorAll("button");
         var changeHtml ="";
         console.log(serchArray)
-        var rangebox = document.querySelector(".form-control-range")
-        var changeRange = document.querySelector(".changeRange");
-        rangebox.addEventListener("change",function(e){
-        	console.log(e.target.value);
-        	console.log(changeRange);
-        	changeRange.innerText = e.target.value+"만원";
-        })
+        
         for(var i = 0 ; i<serchArray.length; i++){
             serchArray[i].addEventListener("click",function(e){
                 var target = e.target.id
@@ -163,7 +146,7 @@
                     select = document.querySelector("#manuFacType").value
                     console.log(select)
                     changeHtml ="";
-                    if(select != "box"){
+                    if(select != "type"){
 	                    typeAjax(select);
                     }else{
                     	window.location.reload(true);
@@ -172,11 +155,7 @@
                     select = document.querySelector("#manuFacLoc").value
                     console.log(select)
                     changeHtml ="";
-                    if(select != "box"){
-	                    locAjax(select);
-                    }else{
-                    	window.location.reload(true);
-                    }
+                    locAjax(select);
                 }else if(target === "serchByPricebtn"){
                     select = document.querySelector("#manuFacPrice").value
                     console.log(select)
@@ -202,10 +181,10 @@
 		}
 		
 		function locAjax(select){
-			console.log(typeof(select) + " " +select)
 			$.ajax({
-                url:"${contextPath}/serchByManuFacLoc?loc=" + select,
+                url:"${contextPath}/plt/serchByManuFacLoc",
                 type:"GET",
+                data:{"loc":select},
                 success:function(data){
                 	for(var i = 0 ; i<Object.keys(data).length; i++){
                 		var manuFac = data[i];
@@ -218,7 +197,7 @@
 		
 		function priceAjax(select){
 			$.ajax({
-                url:"${contextPath}/serchByPrice",
+                url:"${contextPath}/plt/serchByManuFacType",
                 type:"GET",
                 data:{"price":select},
                 success:function(data){

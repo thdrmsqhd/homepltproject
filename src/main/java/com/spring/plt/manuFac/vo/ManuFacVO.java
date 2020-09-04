@@ -12,16 +12,28 @@ public class ManuFacVO {
 	private String manuBizNo;
 	private String manuBizType;
 	private String manuAddr;
-	private String manuFacLocY;
-	private String manuFacLocX;
+	private String manuDetailAddr;
 	private String manuTel;
 	private String manuStart;
 	private String manuDetail;
 	private String manuImg;
 	private int productPrice;
 	private String manuAuth;
+	private String Type;
 	
 	
+	public String getManuDetailAddr() {
+		return manuDetailAddr;
+	}
+	public void setManuDetailAddr(String manuDetailAddr) {
+		this.manuDetailAddr = manuDetailAddr;
+	}
+	public String getType() {
+		return Type;
+	}
+	public void setType(String type) {
+		Type = type;
+	}
 	public String getId() {
 		return id;
 	}
@@ -69,18 +81,6 @@ public class ManuFacVO {
 	}
 	public void setManuAddr(String manuAddr) {
 		this.manuAddr = manuAddr;
-	}
-	public String getManuFacLocY() {
-		return manuFacLocY;
-	}
-	public void setManuFacLocY(String manufacLocY) {
-		this.manuFacLocY = manufacLocY;
-	}
-	public String getManuFacLocX() {
-		return manuFacLocX;
-	}
-	public void setManuFacLocX(String manufacLocX) {
-		this.manuFacLocX = manufacLocX;
 	}
 	public String getManuTel() {
 		return manuTel;

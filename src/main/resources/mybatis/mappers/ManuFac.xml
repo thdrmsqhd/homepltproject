@@ -11,31 +11,31 @@
 		<result property="manuBizNo" column="manuBizNo" />
 		<result property="manuBizType" column="manuBizType" />
 		<result property="manuAddr" column="manuAddr" />
-		<result property="manuFacLocY" column="manuFacLocY" />
-		<result property="manuFacLocX" column="manuFacLocX" />
+		<result property="manuDetailAddr" column="manuDetailAddr" />
 		<result property="manuTel" column="manuTel" />
 		<result property="manuStart" column="manuStart" />
 		<result property="manuDetail" column="manuDetail" />
 		<result property="manuImg" column="manuImg" />
 		<result property="productPrice" column="productPrice" />
 		<result property="manuAuth" column="manuAuth" />
+		<result property="type" column="Type" />
 	</resultMap>
 	
 	<select id="selectByManuLoc" resultMap="ManuFacResult" parameterType="String">
 		<![CDATA[
-			select * from manufacturer where manuaddr=#{loc}
+			select * from manufacturer where manuaddr like #{loc}||'%'
 		]]>
 	</select>
 	
 	<select id="serchByManuType" resultMap="ManuFacResult" parameterType="String">
 		<![CDATA[
-			select * from manufacturer where type=#{manuType}
+			select * from manufacturer where manubiztype = #{manuType}
 		]]>
 	</select>
 	
-	<select id="serchByManuMinimumPrice" resultMap="ManuFacResult" parameterType="String">
+	<select id="serchByManuMinimumPrice" resultMap="ManuFacResult" parameterType="Integer">
 		<![CDATA[
-			select * from manufacturer where priductPrice>=#{price}
+			select * from manufacturer where productPrice>=#{price}
 		]]>
 	</select>
 	

@@ -9,7 +9,7 @@ public interface ManuFacService {
 
 	List<ManuFacVO> serchByManuType(String manuType);
 
-	List<ManuFacVO> serchByManuMinimumPrice(String price);
+	List<ManuFacVO> serchByManuMinimumPrice(int iPrice);
 
 	ManuFacVO viewManuFac(String id);
 

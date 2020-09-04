@@ -9,7 +9,7 @@ public interface ManuFacDAO {
 
 	List<ManuFacVO> serchByManuType(String manuType);
 
-	List<ManuFacVO> serchByManuMinimunPrice(String price);
+	List<ManuFacVO> serchByManuMinimunPrice(int price);
 
 	ManuFacVO viewManuFac(String id);
 

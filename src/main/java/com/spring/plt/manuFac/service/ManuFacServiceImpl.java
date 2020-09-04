@@ -21,7 +21,7 @@ public class ManuFacServiceImpl implements ManuFacService{
 	}
 
 	@Override
-	public List<ManuFacVO> serchByManuMinimumPrice(String price) {
+	public List<ManuFacVO> serchByManuMinimumPrice(int price) {
 		System.out.println("ManuFac service price");
 		return dao.serchByManuMinimunPrice(price);
 	}

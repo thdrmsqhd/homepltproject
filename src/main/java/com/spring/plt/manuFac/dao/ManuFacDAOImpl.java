@@ -32,9 +32,9 @@ public class ManuFacDAOImpl implements ManuFacDAO{
 	}
 
 	@Override
-	public List<ManuFacVO> serchByManuMinimunPrice(String price) {
+	public List<ManuFacVO> serchByManuMinimunPrice(int price) {
 		System.out.println("ManuFac DAO price");
-		return sqlSession.selectList("mapper.manufac.selectByManuMinimumPrice", price);
+		return sqlSession.selectList("mapper.manufac.serchByManuMinimumPrice", price);
 	}
 
 	@Override
@@ -50,3 +50,5 @@ public class ManuFacDAOImpl implements ManuFacDAO{
 	}
 	
 }
+
+

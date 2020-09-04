@@ -41,20 +41,21 @@ public class ManuFacConrollerImpl implements ManuFacController{
 	}
 	
 	
-	@RequestMapping(value="/serchByManuLoc", method = RequestMethod.GET)
+	@RequestMapping(value="/serchByManuFacLoc", method = RequestMethod.GET)
 	@Override//위치기반 검색
-	public ModelAndView serchByLoc(@RequestParam("loc") String loc,HttpServletRequest request, HttpServletResponse response) {
+	@ResponseBody
+	public Map<Integer, Map<String, Object>> serchByLoc(@RequestParam("loc") String loc,HttpServletRequest request, HttpServletResponse response) {
 		System.out.println(loc);
 		System.out.println("ManuFac controller");
-		String viewName = (String) request.getAttribute("viewName");
 		List<ManuFacVO> manuFacList= new ArrayList<ManuFacVO>();
 		manuFacList = service.serchByManuLoc(loc);
-		ModelAndView mav = new ModelAndView(viewName);//뷰 설정할것 
-		mav.addObject("manuFacList",manuFacList);
-		return mav;
+		Map<Integer, Map<String, Object>> map = new HashMap<Integer, Map<String,Object>>();
+		for(int i =0; i<manuFacList.size(); i++) {
+			map.put(i,putMapManuFac(i,manuFacList));
+		}
+		return map;
 	}
 	
-	@SuppressWarnings("null")
 	@RequestMapping(value="/serchByManuType", method = RequestMethod.GET)
 	@Override//업종기반 검색
 	@ResponseBody
@@ -65,56 +66,26 @@ public class ManuFacConrollerImpl implements ManuFacController{
 		manuFacList = service.serchByManuType(manuType);
 		Map<Integer, Map<String, Object>> map = new HashMap<Integer, Map<String,Object>>();
 		for(int i =0; i<manuFacList.size(); i++) {
-			Map<String,Object> manuFac = new HashMap<String,Object>();
-			String id = manuFacList.get(i).getId();
-			manuFac.put("id", id);
-			String pwd = manuFacList.get(i).getPwd();
-			manuFac.put("pwd", pwd);
-			String name = manuFacList.get(i).getManuName();
-			manuFac.put("name", name);
-			String ceoName = manuFacList.get(i).getManuCeoName();
-			manuFac.put("ceoName", ceoName);
-			String email = manuFacList.get(i).getManuEmail();
-			manuFac.put("email", email);
-			String bizNo = manuFacList.get(i).getManuBizNo();
-			manuFac.put("bizNo",bizNo);
-			String type = manuFacList.get(i).getManuBizType();
-			manuFac.put("type",type);
-			String addr = manuFacList.get(i).getManuAddr();
-			manuFac.put("addr",addr);
-			String locY = manuFacList.get(i).getManuFacLocX();
-			manuFac.put("locY",locY);
-			String locX = manuFacList.get(i).getManuFacLocX();
-			manuFac.put("locX",locX);
-			String tel = manuFacList.get(i).getManuTel();
-			manuFac.put("tel",tel);
-			String start = manuFacList.get(i).getManuStart();
-			manuFac.put("start",start);
-			String detail = manuFacList.get(i).getManuDetail();
-			manuFac.put("detail",detail);
-			String img = manuFacList.get(i).getManuImg();
-			manuFac.put("img",img);
-			int price = manuFacList.get(i).getProductPrice();
-			manuFac.put("price",price);
-			String auth = manuFacList.get(i).getManuAuth();
-			manuFac.put("auth",auth);
-			map.put(i,manuFac);
+			map.put(i,putMapManuFac(i,manuFacList));
 		}
-		System.out.println(map);
 		return map;//리턴을 맵타입으로 시도 해볼것,ajax가 리턴 받을수 있는것은 json,xml,text...이기때문에 json으로 반환해주는것이 맞다
 	}
 	
 	@RequestMapping(value="/serchByPrice", method = RequestMethod.GET)
 	@Override//최소주문금액 기반 검색
-	public ModelAndView serchByManuMinimumPrice(@RequestParam("price") String price,HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(price);
+	@ResponseBody
+	public Map<Integer, Map<String, Object>> serchByManuMinimumPrice(@RequestParam("price") String price,HttpServletRequest request, HttpServletResponse response) {
+		price += "0000";
+		int iPrice = Integer.parseInt(price);
+		System.out.println(iPrice);
 		System.out.println("ManuFac controller");
-		String viewName = (String) request.getAttribute("viewName");
 		List<ManuFacVO> manuFacList= new ArrayList<ManuFacVO>();
-		manuFacList = service.serchByManuMinimumPrice(price);
-		ModelAndView mav = new ModelAndView(viewName);//뷰 설정할것 
-		mav.addObject("manuFacList",manuFacList);
-		return mav;
+		manuFacList = service.serchByManuMinimumPrice(iPrice);
+		Map<Integer, Map<String, Object>> map = new HashMap<Integer, Map<String,Object>>();
+		for(int i =0; i<manuFacList.size(); i++) {
+			map.put(i,putMapManuFac(i,manuFacList));
+		}
+		return map;
 	}
 	
 	@RequestMapping(value="/viewManuFac", method= RequestMethod.GET)
@@ -128,6 +99,43 @@ public class ManuFacConrollerImpl implements ManuFacController{
 		mav.addObject("manuFacVO", manuFacVO);
 		System.out.println(manuFacVO);
 		return mav;
+	}
+	
+	public Map<String, Object> putMapManuFac(int i,List<ManuFacVO> manuFacList){
+		Map<String, Object> manuFac = new HashMap<String, Object>();
+		String id = manuFacList.get(i).getId();
+		manuFac.put("id", id);
+		String pwd = manuFacList.get(i).getPwd();
+		manuFac.put("pwd", pwd);
+		String name = manuFacList.get(i).getManuName();
+		manuFac.put("name", name);
+		String ceoName = manuFacList.get(i).getManuCeoName();
+		manuFac.put("ceoName", ceoName);
+		String email = manuFacList.get(i).getManuEmail();
+		manuFac.put("email", email);
+		String bizNo = manuFacList.get(i).getManuBizNo();
+		manuFac.put("bizNo",bizNo);
+		String bizType = manuFacList.get(i).getManuBizType();
+		manuFac.put("bizType",bizType);
+		String addr = manuFacList.get(i).getManuAddr();
+		manuFac.put("addr",addr);
+		String detailAddr = manuFacList.get(i).getManuDetailAddr();
+		manuFac.put("detailAddr",detailAddr);
+		String tel = manuFacList.get(i).getManuTel();
+		manuFac.put("tel",tel);
+		String start = manuFacList.get(i).getManuStart();
+		manuFac.put("start",start);
+		String detail = manuFacList.get(i).getManuDetail();
+		manuFac.put("detail",detail);
+		String img = manuFacList.get(i).getManuImg();
+		manuFac.put("img",img);
+		int price = manuFacList.get(i).getProductPrice();
+		manuFac.put("price",price);
+		String auth = manuFacList.get(i).getManuAuth();
+		manuFac.put("auth",auth);
+		String Type = manuFacList.get(i).getType();
+		manuFac.put("Type", Type);
+		return manuFac;
 	}
 	
 	

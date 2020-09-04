@@ -12,11 +12,11 @@ import com.spring.plt.manuFac.vo.ManuFacVO;
 
 public interface ManuFacController {
 
-	ModelAndView serchByLoc(String loc, HttpServletRequest request, HttpServletResponse response);
+	Map<Integer, Map<String, Object>> serchByLoc(String loc, HttpServletRequest request, HttpServletResponse response);
 
 	Map serchByManuType(String manuType, HttpServletRequest request, HttpServletResponse response);
 
-	ModelAndView serchByManuMinimumPrice(String price, HttpServletRequest request, HttpServletResponse response);
+	Map<Integer, Map<String, Object>> serchByManuMinimumPrice(String price, HttpServletRequest request, HttpServletResponse response);
 
 	ModelAndView viewManuFac(String id, HttpServletRequest request, HttpServletResponse response);
 
