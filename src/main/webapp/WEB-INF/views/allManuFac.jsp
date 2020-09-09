@@ -38,14 +38,14 @@
 		    							<a href="#" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Add to Wishlist">
 		    								<span class="flaticon-heart-1"></span>
 		    							</a>
-		    							<a href="#" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Quick View">
+		    							<a href="${contextPath }/viewManuFac?id=${manuFac.id}" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Quick View">
 		    								<span class="flaticon-search"></span>
 		    							</a>
 		    						</div>
 		    					</div>
 		    					<div class="text px-4 py-3 w-100">
 		    						<p class="mb-2"><span class="price">${manuFac.productPrice } </span></p>
-		    						<h2><a href="#"> ${manuFac.manuName }</a></h2>
+		    						<h2><a href="${contextPath }/viewManuFac?id=${manuFac.id}"> ${manuFac.manuName }</a></h2>
 		    						<p> ${manuFac.manuAddr }</p>
 		    					</div>
 		    				</div>
@@ -239,14 +239,14 @@
 				changeHtml +=				'<a href="#" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Add to Wishlist">'
 				changeHtml +=						'<span class="flaticon-heart-1"></span>'
 				changeHtml +=				'</a>'
-				changeHtml +=				'<a href="#" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Quick View">'
+				changeHtml +=				'<a href="${contextPath }/viewManuFac?id=${manuFac.id}" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Quick View">'
 				changeHtml +=					'<span class="flaticon-search"></span>'
 				changeHtml +=				'</a>'
 				changeHtml +=			'</div>'
 				changeHtml +=		'</div>'
 				changeHtml +=		'<div class="text px-4 py-3 w-100">'
 				changeHtml +=			'<p class="mb-2"><span class="price">' +manuFac.price  + '</span></p>'
-				changeHtml +=			'<h2><a href="#"> '+manuFac.name+' </a></h2>'
+				changeHtml +=			"<h2><a href=plt/viewManuFac?id="+manuFac.id+">"+manuFac.name+"</a></h2>"
 				changeHtml +=			'<p> ' + manuFac.addr + '</p>'
 				changeHtml +=		'</div>'
 				changeHtml +=	'</div>'

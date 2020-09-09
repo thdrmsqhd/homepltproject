@@ -18,13 +18,13 @@
 	
 	<select id="serchByName" resultMap="expertResult" parameterType="String">
 		<![CDATA[
-			select * from Expert where expName=#{name}
+			select * from Expert where expName like #{name}||'%'
 		]]>
 	</select>
 	
 	<select id="serchByType" resultMap="expertResult" parameterType="String">
 		<![CDATA[
-			select * from expert where exptype=#{type}
+			select * from expert where expbizfield=#{type}
 		]]>
 	</select>
 	

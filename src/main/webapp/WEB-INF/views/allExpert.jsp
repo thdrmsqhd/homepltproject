@@ -29,7 +29,7 @@
         <div class="row">
           <div class="col-lg-9 ftco-animate">
 					<div class="row con">
-					<c:forEach var = "manuFac" items = "${manuFacList}">
+					<c:forEach var = "expert" items = "${expertList}">
 						<!--한칸-->
 		    			<div class="col-md-4 d-flex">
 		    				<div class="book-wrap">
@@ -38,15 +38,14 @@
 		    							<a href="#" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Add to Wishlist">
 		    								<span class="flaticon-heart-1"></span>
 		    							</a>
-		    							<a href="#" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Quick View">
+		    							<a href="${contextPath }/viewExpert?id=${expert.id }" class="icon d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="left" title="Quick View">
 		    								<span class="flaticon-search"></span>
 		    							</a>
 		    						</div>
 		    					</div>
 		    					<div class="text px-4 py-3 w-100">
-		    						<p class="mb-2"><span class="price">${manuFac.productPrice } </span></p>
-		    						<h2><a href="#"> ${manuFac.manuName }</a></h2>
-		    						<p> ${manuFac.manuAddr }</p>
+		    						<h2><a href="${contextPath }/viewExpert?id= ${expert.id }"> ${expert.expName }</a></h2>
+		    						<p> ${expert.expBizField }</p>
 		    					</div>
 		    				</div>
 		    			</div>
@@ -82,35 +81,23 @@
           <div id="sidebar" class="sidebar-box ftco-animate">
             <div class="categories">
               <!-- <h5>업종별 검색</h5> -->
-              <select id="manuFacType" class="custom-select" style="width:75%">
-                <option value="type">업종</option>
-                <option value="fire">fire</option>
-                <option value="wind">wind</option>
-                <option value="spark">spark</option>
-                <option value="parrot">Parrot</option>
+              <select id="expertBizType" class="custom-select" style="width:75%">
+                <option value="box">업종</option>
+                <option value="도서/음반">도서/음반</option>
+                <option value="가전/디지털">가전/디지털</option>
+                <option value="홈인테리어">홈인테리어</option>
+                <option value="패션의류/잡화">패션의류/잡화</option>
+                <option value="기타">기타</option>
               </select>
               <button id="serchByTypebtn" class="btn btn-primary">검색</button>
+              
               <!-- id기준으로 자바스크립트에서 button선택 하여 onClick메서드 이용하여 ajax작동 -->
-              <hr>
-              <!-- <h5>지역별 검색</h5> -->
-              <select id="manuFacLoc" class="custom-select" style="width:75%">
-                <option value="">지역</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="hamster">Hamster</option>
-                <option value="parrot">Parrot</option>
-              </select>
-              <button id="serchByLocbtn" class="btn btn-primary">검색</button>
-              <hr>
-              <!-- <h5>최소 발주 금액</h5> -->
-              <select id="manuFacPrice" class="custom-select" style="width:75%">
-                <option value="">최소 발주 금액</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="hamster">Hamster</option>
-                <option value="parrot">Parrot</option>
-              </select>
-              <button id="serchByPricebtn" class="btn btn-primary">검색</button>
+              <!-- <h5>전문가 이름 검색</h5> -->
+              
+              <div class="form-group" style="margin-top:10%">
+              	<input type="text" id="expertName" placeholder="전문가 이름 검색"/><span style="margin-left:7%"></span><button id="serchByName" class="btn btn-primary">검색</button>
+              </div>
+              <!-- <h5>전문가 이름 검색</h5> -->
             </div>
           </div>
         </div>
@@ -143,32 +130,27 @@
                 var select = "";
                 
                 if(target === "serchByTypebtn"){
-                    select = document.querySelector("#manuFacType").value
+                    select = document.querySelector("#expertBizType").value
                     console.log(select)
                     changeHtml ="";
-                    if(select != "type"){
+                    if(select != "box"){
 	                    typeAjax(select);
                     }else{
                     	window.location.reload(true);
                     }
-                }else if(target === "serchByLocbtn"){
-                    select = document.querySelector("#manuFacLoc").value
+                }else if(target === "serchByName"){
+                    select = document.querySelector("#expertName").value
                     console.log(select)
                     changeHtml ="";
-                    locAjax(select);
-                }else if(target === "serchByPricebtn"){
-                    select = document.querySelector("#manuFacPrice").value
-                    console.log(select)
-                    changeHtml ="";
-                    priceAjax(select);
+                    nameAjax(select);
                 }
             })
         }
 		function typeAjax(select){
 			$.ajax({
-            	url:"${contextPath}/serchByManuType",
+            	url:"${contextPath}/serchByExpertType",
             	type:"GET",
-            	data:{"manuType":select},
+            	data:{"type":select},
             	dataType:"json",
             	success:function(data){
             		for(var i = 0 ; i<Object.keys(data).length; i++){
@@ -180,11 +162,11 @@
             });
 		}
 		
-		function locAjax(select){
+		function nameAjax(select){
 			$.ajax({
-                url:"${contextPath}/plt/serchByManuFacLoc",
+                url:"${contextPath}/serchByExpertName",
                 type:"GET",
-                data:{"loc":select},
+                data:{"name":select},
                 success:function(data){
                 	for(var i = 0 ; i<Object.keys(data).length; i++){
                 		var manuFac = data[i];
@@ -195,22 +177,7 @@
             });
 		}
 		
-		function priceAjax(select){
-			$.ajax({
-                url:"${contextPath}/plt/serchByManuFacType",
-                type:"GET",
-                data:{"price":select},
-                success:function(data){
-                	for(var i = 0 ; i<Object.keys(data).length; i++){
-                		var manuFac = data[i];
-                		console.log(manuFac);
-          				fixHtml(manuFac);
-                    }
-                }
-            });
-		}
-		
-		function fixHtml(manuFac){
+		function fixHtml(expert){
 				changeHtml += '<div class="col-md-4 d-flex">'        				
 				changeHtml += 	'<div class="book-wrap">'
 				changeHtml +=		'<div class="img d-flex justify-content-end w-100" style="background-image: url(${contextPath }/resources/images/book-1.jpg);">'
@@ -224,9 +191,8 @@
 				changeHtml +=			'</div>'
 				changeHtml +=		'</div>'
 				changeHtml +=		'<div class="text px-4 py-3 w-100">'
-				changeHtml +=			'<p class="mb-2"><span class="price">' +manuFac.price  + '</span></p>'
-				changeHtml +=			'<h2><a href="#"> '+manuFac.name+' </a></h2>'
-				changeHtml +=			'<p> ' + manuFac.addr + '</p>'
+				changeHtml +=			'<h2><a href="#"> '+expert.name+' </a></h2>'
+				changeHtml +=			'<p> ' + expert.type + '</p>'
 				changeHtml +=		'</div>'
 				changeHtml +=	'</div>'
 				changeHtml +='</div>'
